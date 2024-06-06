@@ -1,7 +1,10 @@
 package lesson2.concerttickets.service;
 
+import lesson2.concerttickets.exception.TicketNotFoundException;
 import lesson2.concerttickets.model.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
+import lesson2.concerttickets.utils.IdGenerator;
+import lesson2.concerttickets.utils.TicketBuilder;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -25,19 +28,19 @@ public class TicketService {
         return tickets.values();
     }
 
+    public Ticket findById(String ticketId) {
+        if(tickets.containsKey(ticketId)) {
+            return tickets.get(ticketId);
+        } else {
+            throw new TicketNotFoundException("Ticket with such id not found");
+        }
+    }
+
     public static void main(String[] args) {
-        Ticket emptyTicket = new Ticket();
-        Ticket fullTicket = new Ticket("3454A","1234567890",303,
-                System.currentTimeMillis()/1000L,true, StadiumSector.B,
-                20.2,new BigDecimal(150));
-        Ticket limitedTicket = new Ticket("1234567890",305,System.currentTimeMillis()/1000L);
-
         TicketService ticketService = new TicketService();
-        ticketService.save(emptyTicket);
-        ticketService.save(fullTicket);
-        ticketService.save(limitedTicket);
+        TicketBuilder.createTickets(ticketService);
 
-        System.out.println(ticketService.findAll());
 
+        System.out.println(ticketService.findById("2B"));
     }
 }
