@@ -19,9 +19,9 @@ public class TicketService {
         this.tickets = new HashMap<>();
     }
 
-    public String save(Ticket ticket) {
-        this.tickets.put(ticket.getId(),ticket);
-        return ticket.getId();
+    public String save(Ticket t) {
+        this.tickets.put(t.getId(),t);
+        return t.getId();
     }
 
     public Collection<Ticket> findAll() {
