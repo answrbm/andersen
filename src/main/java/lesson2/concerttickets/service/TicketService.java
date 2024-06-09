@@ -2,7 +2,7 @@ package lesson2.concerttickets.service;
 
 import lesson2.concerttickets.model.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
-
+import java.util.Random;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
