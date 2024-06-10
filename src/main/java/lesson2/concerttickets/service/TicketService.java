@@ -2,11 +2,10 @@ package lesson2.concerttickets.service;
 
 import lesson2.concerttickets.model.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
-import java.util.Random;
+
+import java.util.*;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketService {
 
@@ -19,6 +18,14 @@ public class TicketService {
     public String save(Ticket ticket) {
         this.tickets.put(ticket.getId(),ticket);
         return ticket.getId();
+    }
+
+
+    public List<Ticket> findByStadiumSector(StadiumSector stadiumSector) {
+        return tickets.values()
+                .stream()
+                .filter(ticket -> ticket.getSector() == stadiumSector)
+                .collect(Collectors.toList());
     }
 
     public Collection<Ticket> findAll() {
