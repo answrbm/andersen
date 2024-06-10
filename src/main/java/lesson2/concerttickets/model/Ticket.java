@@ -1,15 +1,18 @@
 package lesson2.concerttickets.model;
 
-import lesson2.concerttickets.utils.IdGenerator;
+import lesson2.concerttickets.model.abstraction.Entity;
+import lesson2.concerttickets.model.abstraction.Shareable;
+import lesson2.concerttickets.model.annotation.NullableWarning;
+import lesson2.concerttickets.model.enums.StadiumSector;
 import lesson2.concerttickets.utils.TicketValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket extends Entity implements Shareable {
 
-    private String id;
+    @NullableWarning
     private String concertHall;
     private Integer eventCode;
     private Long concertTime;
@@ -20,12 +23,12 @@ public class Ticket {
     private LocalDateTime createdAt;
 
     public Ticket() {
-        this.id = IdGenerator.generate();
         this.createdAt = LocalDateTime.now();
     }
 
-    public Ticket(String id, String concertHall, Integer eventCode, Long concertTime, boolean isPromo, StadiumSector sector, double maxBackpackWeight, BigDecimal ticketPrice) {
-        this.id = TicketValidator.idValidator(id);
+    public Ticket(Long id, String concertHall, Integer eventCode, Long concertTime, boolean isPromo, StadiumSector sector, double maxBackpackWeight, BigDecimal ticketPrice) {
+        super(id);
+        TicketValidator.idValidator(getId());
         this.concertHall = TicketValidator.concertHallValidator(concertHall);
         this.eventCode = TicketValidator.eventCodeValidator(eventCode);
         this.concertTime = concertTime;
@@ -43,28 +46,22 @@ public class Ticket {
         this.createdAt = LocalDateTime.now();
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public void share(String phone) {
+        System.out.println("Shared by phone: " + phone);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public void share(String phone, String email) {
+        System.out.println("Shared by phone: " + phone + " and email: " + email);
     }
 
     public String getConcertHall() {
         return concertHall;
     }
 
-    public void setConcertHall(String concertHall) {
-        this.concertHall = concertHall;
-    }
-
     public Integer getEventCode() {
         return eventCode;
-    }
-
-    public void setEventCode(Integer eventCode) {
-        this.eventCode = eventCode;
     }
 
     public Long getConcertTime() {
@@ -79,10 +76,6 @@ public class Ticket {
         return isPromo;
     }
 
-    public void setPromo(boolean promo) {
-        isPromo = promo;
-    }
-
     public StadiumSector getSector() {
         return sector;
     }
@@ -95,24 +88,12 @@ public class Ticket {
         return maxBackpackWeight;
     }
 
-    public void setMaxBackpackWeight(double maxBackpackWeight) {
-        this.maxBackpackWeight = maxBackpackWeight;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override
@@ -124,7 +105,6 @@ public class Ticket {
 
         if (isPromo != ticket.isPromo) return false;
         if (Double.compare(ticket.maxBackpackWeight, maxBackpackWeight) != 0) return false;
-        if (!Objects.equals(id, ticket.id)) return false;
         if (!Objects.equals(concertHall, ticket.concertHall)) return false;
         if (!Objects.equals(eventCode, ticket.eventCode)) return false;
         if (!Objects.equals(concertTime, ticket.concertTime)) return false;
@@ -137,8 +117,7 @@ public class Ticket {
     public int hashCode() {
         int result;
         long temp;
-        result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (concertHall != null ? concertHall.hashCode() : 0);
+        result = concertHall != null ? concertHall.hashCode() : 0;
         result = 31 * result + (eventCode != null ? eventCode.hashCode() : 0);
         result = 31 * result + (concertTime != null ? concertTime.hashCode() : 0);
         result = 31 * result + (isPromo ? 1 : 0);
@@ -153,7 +132,7 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "id='" + id + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", concertHall='" + concertHall + '\'' +
                 ", eventCode=" + eventCode +
                 ", concertTime=" + concertTime +

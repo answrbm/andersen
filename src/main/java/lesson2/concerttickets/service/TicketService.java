@@ -1,8 +1,9 @@
 package lesson2.concerttickets.service;
 
-import lesson2.concerttickets.model.StadiumSector;
+import lesson2.concerttickets.model.enums.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
-import java.util.Random;
+import lesson2.concerttickets.utils.NullableWarningManager;
+
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,13 +11,13 @@ import java.util.Map;
 
 public class TicketService {
 
-    private final Map<String, Ticket> tickets;
+    private final Map<Long, Ticket> tickets;
 
     public TicketService() {
         this.tickets = new HashMap<>();
     }
 
-    public String save(Ticket ticket) {
+    public Long save(Ticket ticket) {
         this.tickets.put(ticket.getId(),ticket);
         return ticket.getId();
     }
@@ -27,7 +28,7 @@ public class TicketService {
 
     public static void main(String[] args) {
         Ticket emptyTicket = new Ticket();
-        Ticket fullTicket = new Ticket("3454A","1234567890",303,
+        Ticket fullTicket = new Ticket(3454L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
         Ticket limitedTicket = new Ticket("1234567890",305,System.currentTimeMillis()/1000L);
@@ -37,7 +38,12 @@ public class TicketService {
         ticketService.save(fullTicket);
         ticketService.save(limitedTicket);
 
+        NullableWarningManager.checkFields(new Ticket());
+
         System.out.println(ticketService.findAll());
+
+        emptyTicket.share("+123456789");
+        emptyTicket.share("+123456789","test@mail.com");
 
     }
 }

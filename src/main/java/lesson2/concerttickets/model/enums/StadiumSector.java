@@ -1,4 +1,4 @@
-package lesson2.concerttickets.model;
+package lesson2.concerttickets.model.enums;
 
 public enum StadiumSector {
 

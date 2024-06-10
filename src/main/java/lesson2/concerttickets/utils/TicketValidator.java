@@ -4,8 +4,15 @@ import lesson2.concerttickets.exception.TicketBadParamsException;
 
 public class TicketValidator {
 
-    public static String idValidator(String id) {
-        if(id.length() > 4) throw new TicketBadParamsException("Id should have max 4 digits and/or chars");
+    public static Long idValidator(Long id) {
+        long digitsCounter = 0;
+        long idTemp = id;
+        while(idTemp != 0) {
+            idTemp = idTemp/10;
+            digitsCounter++;
+        }
+        if(digitsCounter > 4)
+            throw new TicketBadParamsException("Id should have max 4 digits");
         return id;
     }
 
