@@ -4,6 +4,8 @@ import lesson2.concerttickets.exception.TicketNotFoundException;
 import lesson2.concerttickets.model.Ticket;
 import lesson2.concerttickets.utils.TicketBuilder;
 
+import java.util.Random;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
