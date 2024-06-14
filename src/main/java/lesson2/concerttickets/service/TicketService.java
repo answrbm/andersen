@@ -4,11 +4,10 @@ import lesson2.concerttickets.exception.TicketNotFoundException;
 import lesson2.concerttickets.model.Ticket;
 import lesson2.concerttickets.utils.TicketBuilder;
 
+import java.util.*;
 import java.util.Random;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketService {
 
@@ -21,6 +20,14 @@ public class TicketService {
     public String save(Ticket t) {
         this.tickets.put(t.getId(),t);
         return t.getId();
+    }
+
+
+    public List<Ticket> findByStadiumSector(StadiumSector stadiumSector) {
+        return tickets.values()
+                .stream()
+                .filter(ticket -> ticket.getSector() == stadiumSector)
+                .collect(Collectors.toList());
     }
 
     public Collection<Ticket> findAll() {
