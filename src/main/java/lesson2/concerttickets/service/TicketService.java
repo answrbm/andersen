@@ -3,9 +3,12 @@ package lesson2.concerttickets.service;
 import lesson2.concerttickets.model.enums.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
 import lesson2.concerttickets.utils.NullableWarningManager;
+import lesson2.concerttickets.utils.TicketBuilder;
 
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TicketService {
 
