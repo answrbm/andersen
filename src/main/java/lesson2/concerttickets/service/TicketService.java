@@ -5,9 +5,7 @@ import lesson2.concerttickets.model.Ticket;
 import lesson2.concerttickets.utils.NullableWarningManager;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketService {
 
@@ -32,11 +30,9 @@ public class TicketService {
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
         Ticket limitedTicket = new Ticket("1234567890",305,System.currentTimeMillis()/1000L);
-
+  
         TicketService ticketService = new TicketService();
-        ticketService.save(emptyTicket);
-        ticketService.save(fullTicket);
-        ticketService.save(limitedTicket);
+        TicketBuilder.createTickets(ticketService);
 
         NullableWarningManager.checkFields(new Ticket());
 
