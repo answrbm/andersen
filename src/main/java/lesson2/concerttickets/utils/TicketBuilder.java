@@ -1,6 +1,6 @@
 package lesson2.concerttickets.utils;
 
-import lesson2.concerttickets.model.StadiumSector;
+import lesson2.concerttickets.model.enums.StadiumSector;
 import lesson2.concerttickets.model.Ticket;
 import lesson2.concerttickets.service.TicketService;
 
@@ -10,34 +10,34 @@ import java.util.Map;
 public class TicketBuilder {
 
     public static void createTickets(TicketService ticketService) {
-        Ticket ticket1 = new Ticket("1B","1234567890",303,
+        Ticket ticket1 = new Ticket(1L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket2 = new Ticket("2B","1234567890",303,
+        Ticket ticket2 = new Ticket(2L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket3 = new Ticket("3B","1234567890",303,
+        Ticket ticket3 = new Ticket(3L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket4 = new Ticket("4B","1234567890",303,
+        Ticket ticket4 = new Ticket(4L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket5 = new Ticket("5B","1234567890",303,
+        Ticket ticket5 = new Ticket(5L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket6 = new Ticket("6B","1234567890",303,
+        Ticket ticket6 = new Ticket(6L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket7 = new Ticket("7B","1234567890",303,
+        Ticket ticket7 = new Ticket(7L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket8 = new Ticket("8B","1234567890",303,
+        Ticket ticket8 = new Ticket(8L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket9 = new Ticket("9B","1234567890",303,
+        Ticket ticket9 = new Ticket(9L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
-        Ticket ticket10 = new Ticket("10B","1234567890",303,
+        Ticket ticket10 = new Ticket(10L,"1234567890",303,
                 System.currentTimeMillis()/1000L,true, StadiumSector.B,
                 20.2,new BigDecimal(150));
 
