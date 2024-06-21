@@ -3,6 +3,7 @@ package lesson5;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lesson5.model.BusTicket;
+import lesson5.service.BusTicketService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 
 public class Validator {
 
+    private static BusTicketService busTicketService = new BusTicketService();
     private static Map<String, Integer> violationsCounter = new HashMap<>();
     private static String fileName = "src/main/resources/test.txt";
     private static BufferedReader reader;
@@ -38,7 +40,8 @@ public class Validator {
         do {
             String input = getInputFromFile();
             BusTicket ticket = new ObjectMapper().readValue(input, BusTicket.class);
-            System.out.println(ticket);
+            busTicketService.createBusTicket(ticket);
+
             if(validate(ticket)) {
                 validTicketsCounter++;
             }
@@ -49,6 +52,13 @@ public class Validator {
         System.out.println("Total = {"+totalTicketsCounter+"}");
         System.out.println("Valid = {"+validTicketsCounter+"}");
         System.out.println("Most popular violation = {"+getCommonViolation()+"}");
+
+        System.out.println("All tickets: " + busTicketService.getAllBusTickets());
+        System.out.println("Ticket found by id: " + busTicketService.getTicketById(5L));
+        System.out.println("Delete ticket by id: " + busTicketService.deleteTicketById(5L));
+        System.out.println("All tickets: " + busTicketService.getAllBusTickets());
+        System.out.println("Get tickets by type and price: " +
+                busTicketService.getTicketsByTypeAndPrice("DAY","0"));
     }
 
     private static boolean checkDate(String date) {

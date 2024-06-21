@@ -1,6 +1,10 @@
 package lesson5.model;
 
+import java.util.Objects;
+
 public class BusTicket {
+
+    Long id;
 
     String ticketClass;
 
@@ -13,11 +17,19 @@ public class BusTicket {
     public BusTicket() {
     }
 
-    public BusTicket(String ticketClass, String ticketType, String startDate, String price) {
+    public BusTicket(Long id, String ticketClass, String ticketType, String startDate, String price) {
         this.ticketClass = ticketClass;
         this.ticketType = ticketType;
         this.startDate = startDate;
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTicketClass() {
@@ -59,16 +71,18 @@ public class BusTicket {
 
         BusTicket busTicket = (BusTicket) o;
 
-        if (ticketClass != null ? !ticketClass.equals(busTicket.ticketClass) : busTicket.ticketClass != null)
+        if (!Objects.equals(id, busTicket.id)) return false;
+        if (!Objects.equals(ticketClass, busTicket.ticketClass))
             return false;
-        if (ticketType != null ? !ticketType.equals(busTicket.ticketType) : busTicket.ticketType != null) return false;
-        if (startDate != null ? !startDate.equals(busTicket.startDate) : busTicket.startDate != null) return false;
-        return price != null ? price.equals(busTicket.price) : busTicket.price == null;
+        if (!Objects.equals(ticketType, busTicket.ticketType)) return false;
+        if (!Objects.equals(startDate, busTicket.startDate)) return false;
+        return Objects.equals(price, busTicket.price);
     }
 
     @Override
     public int hashCode() {
-        int result = ticketClass != null ? ticketClass.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (ticketClass != null ? ticketClass.hashCode() : 0);
         result = 31 * result + (ticketType != null ? ticketType.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
@@ -78,7 +92,8 @@ public class BusTicket {
     @Override
     public String toString() {
         return "BusTicket{" +
-                "ticketClass='" + ticketClass + '\'' +
+                "id=" + id +
+                ", ticketClass='" + ticketClass + '\'' +
                 ", ticketType='" + ticketType + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", price='" + price + '\'' +
