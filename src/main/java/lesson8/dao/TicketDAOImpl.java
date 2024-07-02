@@ -9,26 +9,37 @@ import java.util.Optional;
 
 public class TicketDAOImpl implements TicketDAO {
 
+    private final Connection conn;
+
+    public TicketDAOImpl(Connection conn) {
+        this.conn = conn;
+    }
+
     @Override
     public BusTicket save(BusTicket ticket) {
-        try(Connection conn = lesson8.Connection.connect();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO tickets(user_id, ticket_type, creation_date) " +
+        try(PreparedStatement ps = conn.prepareStatement("INSERT INTO tickets(user_id, ticket_type, creation_date) " +
                     "VALUES(?, CAST(? AS ticket_type),?)")) {
             ps.setLong(1,ticket.getUserId());
             ps.setObject(2, ticket.getTicketType());
             ps.setTimestamp(3,Timestamp.valueOf(ticket.getCreationDate()));
             ps.executeUpdate();
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e.printStackTrace();
+            }
         }
         return ticket;
     }
 
     @Override
     public Optional<BusTicket> findById(Long ticketId) {
-        try(Connection conn = lesson8.Connection.connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tickets WHERE id = ?")) {
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * FROM tickets WHERE id = ?")) {
             ResultSet rs = ps.executeQuery();
+            conn.commit();
             if(rs.next()) {
                 BusTicket ticket = new BusTicket();
                 ticket.setId(rs.getLong("id"));
@@ -38,6 +49,11 @@ public class TicketDAOImpl implements TicketDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e.printStackTrace();
+            }
         }
         return Optional.empty();
     }
@@ -45,10 +61,10 @@ public class TicketDAOImpl implements TicketDAO {
     @Override
     public List<BusTicket> findByUserId(Long userId) {
         List<BusTicket> tickets = new ArrayList<>();
-        try(Connection conn = lesson8.Connection.connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tickets WHERE user_id = ?")) {
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * FROM tickets WHERE user_id = ?")) {
             ps.setLong(1,userId);
             ResultSet rs = ps.executeQuery();
+            conn.commit();
             while(rs.next()) {
                 BusTicket ticket = new BusTicket();
                 ticket.setId(rs.getLong("id"));
@@ -59,18 +75,29 @@ public class TicketDAOImpl implements TicketDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e.printStackTrace();
+            }
         }
         return tickets;
     }
 
     @Override
     public Long deleteById(Long ticketId) {
-        try(Connection conn = lesson8.Connection.connect();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM tickets WHERE id = ?")) {
+        try(PreparedStatement ps = conn.prepareStatement("DELETE FROM tickets WHERE id = ?")) {
+            conn.setAutoCommit(false);
             ps.setLong(1,ticketId);
             ps.execute();
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e.printStackTrace();
+            }
         }
         return ticketId;
     }

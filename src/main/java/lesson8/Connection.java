@@ -12,4 +12,5 @@ public class Connection {
         return DriverManager
                 .getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db","postgres","1");
     }
+
 }
