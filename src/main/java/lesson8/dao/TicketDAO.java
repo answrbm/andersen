@@ -10,5 +10,6 @@ public interface TicketDAO {
     BusTicket save(BusTicket ticket);
     Optional<BusTicket> findById(Long ticketId);
     List<BusTicket> findByUserId(Long userId);
+    Long updateTicketType(Long ticketId, String ticketType);
     Long deleteById(Long ticketId);
 }

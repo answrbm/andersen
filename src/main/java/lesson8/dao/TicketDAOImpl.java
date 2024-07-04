@@ -85,6 +85,24 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
+    public Long updateTicketType(Long ticketId, String ticketType) {
+        try(PreparedStatement ps = conn.prepareStatement("UPDATE tickets SET ticket_type = CAST(? AS ticket_type) WHERE id = ?")) {
+            ps.setString(1,ticketType);
+            ps.setLong(2, ticketId);
+            ps.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e.printStackTrace();
+            }
+        }
+        return ticketId;
+    }
+
+    @Override
     public Long deleteById(Long ticketId) {
         try(PreparedStatement ps = conn.prepareStatement("DELETE FROM tickets WHERE id = ?")) {
             conn.setAutoCommit(false);
