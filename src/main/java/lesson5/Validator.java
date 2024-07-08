@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lesson5.model.BusTicket;
 import lesson5.service.BusTicketService;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,7 +18,8 @@ public class Validator {
 
     private static BusTicketService busTicketService = new BusTicketService();
     private static Map<String, Integer> violationsCounter = new HashMap<>();
-    private static String fileName = "src/main/resources/test.txt";
+    @Value("${file}")
+    private static String fileName;
     private static BufferedReader reader;
 
     static {

@@ -2,7 +2,6 @@ package lesson10.dao;
 
 import jakarta.persistence.Query;
 import lesson10.model.User;
-import lesson10.util.SessionFactoryManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,8 +16,8 @@ public class UserDAOImpl implements UserDAO {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserDAOImpl(SessionFactoryManager sessionFactoryManager) {
-        this.sessionFactory = sessionFactoryManager.getSessionFactory();
+    public UserDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -67,6 +66,22 @@ public class UserDAOImpl implements UserDAO {
                 e.printStackTrace();
             }
             return user;
+        }
+    }
+
+    @Override
+    public User updateUser(Long userId, User updatedUser) {
+        updatedUser.setId(userId);
+        try(Session s = sessionFactory.openSession()) {
+            Transaction t = s.beginTransaction();
+            try {
+                s.merge(updatedUser);
+                t.commit();
+            } catch (Exception e) {
+                t.rollback();
+                e.printStackTrace();
+            }
+            return updatedUser;
         }
     }
 

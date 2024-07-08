@@ -9,6 +9,7 @@ public interface UserDAO {
     User save(User user);
     Optional<User> findById(Long userId);
     Optional<User> findByName(String name);
+    User updateUser(Long userId, User updatedUser);
     Long deleteById(Long userId);
 
 }
