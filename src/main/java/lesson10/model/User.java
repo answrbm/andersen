@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "users")
@@ -21,4 +19,5 @@ public class User {
     private String name;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
+
 }

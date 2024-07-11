@@ -2,7 +2,6 @@ package lesson10.dao;
 
 import jakarta.persistence.Query;
 import lesson10.model.Ticket;
-import lesson10.util.SessionFactoryManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -19,8 +18,8 @@ public class TicketDAOImpl implements TicketDAO {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public TicketDAOImpl(SessionFactoryManager sessionFactoryManager) {
-        this.sessionFactory = sessionFactoryManager.getSessionFactory();
+    public TicketDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
