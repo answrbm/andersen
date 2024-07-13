@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TicketController {
 
     private final TicketService ticketService;
-    private final String thisIsMyFirstConditionalBean;
+    @Autowired(required = false)
+    private String thisIsMyFirstConditionalBean;
 
     @Autowired
-    public TicketController(TicketService ticketService, String thisIsMyFirstConditionalBean) {
+    public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
-        this.thisIsMyFirstConditionalBean = thisIsMyFirstConditionalBean;
     }
 
     @GetMapping("/{ticketId}")
