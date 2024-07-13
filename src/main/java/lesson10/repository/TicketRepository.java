@@ -1,0 +1,26 @@
+package lesson10.repository;
+
+
+import jakarta.transaction.Transactional;
+import lesson10.model.Ticket;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Transactional
+@Repository
+public interface TicketRepository extends CrudRepository<Ticket,Long> {
+
+    @Modifying
+    @Query(value = "INSERT INTO tickets(user_id, ticket_type, creation_date) VALUES(:user_id, CAST(:ticket_type AS ticket_type), :creation_date)",
+            nativeQuery = true)
+    void save(@Param("user_id") Long userId, @Param("ticket_type") String ticketType, @Param("creation_date") LocalDateTime creationDate);
+
+    List<Ticket> findByUserId(Long userId);
+}

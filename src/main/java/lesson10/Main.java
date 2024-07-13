@@ -1,10 +1,12 @@
 package lesson10;
 
 import lesson10.config.SpringConfig;
-import lesson10.dao.TicketService;
-import lesson10.dao.UserService;
+import lesson10.service.TicketService;
+import lesson10.service.UserService;
 import lesson10.model.Ticket;
 import lesson10.model.User;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
@@ -12,9 +14,13 @@ import org.springframework.core.io.Resource;
 
 import java.time.LocalDateTime;
 
+@SpringBootApplication
 public class Main {
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class,args);
+
+
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
         Environment env = applicationContext.getEnvironment();
         UserService userService = applicationContext.getBean(UserService.class);
