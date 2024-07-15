@@ -46,10 +46,13 @@ public class TicketService {
     public Ticket updateTicketType(Long ticketId, String ticketType) {
         Ticket ticketToUpdate = getTicketById(ticketId);
         ticketToUpdate.setTicketType(ticketType);
-        return ticketRepository.save(ticketToUpdate);
+        ticketRepository.update(ticketToUpdate.getId(),ticketToUpdate.getUserId(),
+                ticketToUpdate.getTicketType(),ticketToUpdate.getCreationDate());
+        return ticketToUpdate;
     }
 
     public Long deleteTicket(Long ticketId) {
+        getTicketById(ticketId);
         ticketRepository.deleteById(ticketId);
         return ticketId;
     }
