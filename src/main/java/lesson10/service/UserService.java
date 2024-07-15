@@ -1,5 +1,6 @@
-package lesson10.dao;
+package lesson10.service;
 
+import lesson10.dao.UserDAOImpl;
 import lesson10.exception.FunctionNotAvailableException;
 import lesson10.exception.UserNotFoundException;
 import lesson10.model.Ticket;
@@ -13,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserDAOImpl userDAO;
-    private final TicketDAOImpl ticketDAO;
+    private final TicketService ticketService;
     private final Environment env;
 
     @Autowired
-    public UserService(UserDAOImpl userDAO, TicketDAOImpl ticketDAO, Environment env) {
+    public UserService(UserDAOImpl userDAO, TicketService ticketService, Environment env) {
         this.userDAO = userDAO;
-        this.ticketDAO = ticketDAO;
+        this.ticketService = ticketService;
         this.env = env;
     }
 
@@ -44,7 +45,7 @@ public class UserService {
 
         getUserById(userId);
         ticketToCreate.setUserId(userId);
-        ticketDAO.save(ticketToCreate);
+        ticketService.createTicket(ticketToCreate);
         return userDAO.updateUser(userId,userToUpdate);
     }
 
